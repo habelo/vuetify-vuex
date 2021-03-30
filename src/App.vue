@@ -11,6 +11,7 @@ export default {
 
   components: {
   },
+  //todo här lägger man alla saker som ska ske på "startup"
   mounted() {
     this.$store.dispatch("setCurrentRole")
   },

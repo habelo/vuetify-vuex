@@ -8,17 +8,20 @@ const headers = {Accept: "application/json"}
 
 export default new Vuex.Store({
   state: {
-    role: 'FirstRole',
+    role: '',
     allRoles: []
   },
   mutations: {
     //synchronous
     addRole(state, role) {
-      state.roles = role;
+      state.role = role;
       state.allRoles.push(role)
     },
   },
   actions: {
+    addRole(state, role) {
+      state.commit("addRole", role)
+    },
     //asynchronous
     async setCurrentRole(state) {
       const newRole = await fetch(url, {headers})
