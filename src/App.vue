@@ -1,6 +1,18 @@
 <template>
   <v-app class="h-min-100">
-    <router-view></router-view>
+
+    <div id="nav">
+      <v-toolbar>
+        <v-toolbar-items class="col-2">
+          <router-link to="/">Main</router-link>
+        </v-toolbar-items>
+        <v-toolbar-items class="col-2">
+          <router-link to="/about">About</router-link>
+        </v-toolbar-items>
+      </v-toolbar>
+    </div>
+
+    <router-view/>
   </v-app>
 </template>
 
@@ -8,9 +20,8 @@
 
 export default {
   name: 'App',
-
-  components: {
-  },
+  methods: {},
+  components: {},
   //todo här lägger man alla saker som ska ske på "startup"
   mounted() {
     this.$store.dispatch("setCurrentRole")

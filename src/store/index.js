@@ -1,15 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import teststore from "./teststore"
 
 Vue.use(Vuex)
 
 const url = "https://jsonplaceholder.typicode.com/posts/1"
 const headers = {Accept: "application/json"}
 
+//todo kanske använda denna för startup kod samt globala, semi/konstanta variabler
+//todo hitta best practice för att ta hand om all kod så att allt inte hamnar här i "fetches" sen
 export default new Vuex.Store({
   state: {
     role: '',
-    allRoles: []
+    allRoles: [],
+    animal: '',
+    animals: [],
   },
   mutations: {
     //synchronous
@@ -17,28 +22,36 @@ export default new Vuex.Store({
       state.role = role;
       state.allRoles.push(role)
     },
+    addAnimal(state, animal) {
+      console.log("Adding animal: "+ animal)
+      state.animal = animal;
+      state.animals.push(animal)
+      console.log("Animals: " + state.animals)
+    }
   },
   actions: {
-    addRole(state, role) {
-      state.commit("addRole", role)
-    },
     //asynchronous
+    //todo fixa så att det funkar i explorer
     async setCurrentRole(state) {
       const newRole = await fetch(url, {headers})
       const r = await newRole.json();
-      console.log("Payload:")
-      console.log(r)
-      console.log(state.state.allRoles)
       const splitRole = r.title.split(" ")[state.state.allRoles.length]
-      console.log(splitRole)
-      //todo kanske inte fungerar med sdk för det gjorde inte för osss förut. kan fortfarande testa
-      state.commit("addRole", splitRole )
+      state.commit("addRole", splitRole)
     }
+    // addRole(state, role) {
+    //   state.commit("addRole", role)
+    // },
+    // addAnimal(state, animal) {
+    //   state.commit("addAnimal", animal)
+    // },
   },
   modules: {
+    teststore
   },
   getters: {
     getCurrentRole: state => state.role,
-    getRoles: state => state.allRoles
+    getRoles: state => state.allRoles,
+    getAnimal: state => state.animal,
+    getAnimals: state => state.animals
   }
 })
